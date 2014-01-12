@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- *
+ * Hello (test)
  * @author Sam
  */
 public class Connection {
