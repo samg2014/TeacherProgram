@@ -4,13 +4,18 @@
  */
 package teacherprogram;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -21,11 +26,11 @@ import javax.swing.JTextField;
 public class MainClass {
 
     public static JTextArea textField;
-    public static boolean used = false;
-    public static char ch = ' ';
-    public static int num = 0;
-    public static ServerSocket ss;
-    public static int numSocks;
+    private static boolean used = false;
+    private static char ch = 'd';
+    private static int num = 0, numSocks;
+    private static ServerSocket ss;
+    public static boolean removeFirstInLine = false;
     /**
      * @param args the command line arguments
      */
@@ -41,8 +46,9 @@ public class MainClass {
             }
         });
         JFrame jframe = new JFrame();
+        jframe.setSize(400, 600);
         jframe.add(textField);
-        jframe.setSize(400, 100);
+        
         jframe.setVisible(true);
 
         Thread thread = new Thread() {
@@ -50,10 +56,12 @@ public class MainClass {
             public void run() {
                 while (true) {
                     if (!used) {
-//                        String txt = textField.getText();
-//                        txt = txt + ch;
-//                        used = true;
-//                        textField.setText(txt);
+                        if(ch == ' ')
+                        {
+                            //removeFirstInLine = true;
+                            used = true;
+                            //System.out.println("Remove 1st in line");
+                        }
                     }
                 }
             }
@@ -64,7 +72,7 @@ public class MainClass {
             @Override
             public void run() {
                 try {
-                    ss = new ServerSocket(42420);
+                    ss = new ServerSocket(42421);
                 } catch (BindException e) {
                     System.out.println(e);
                 }
