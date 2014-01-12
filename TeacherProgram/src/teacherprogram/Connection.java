@@ -51,7 +51,7 @@ public class Connection {
                     } catch (Exception ex) {
                         System.out.println("DISCONNECTED");
                     }
-                    System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
+                    //System.out.println("1st check: " + MainClass.textField.getText().indexOf(username));
                     if (MainClass.removeFirstInLine) {
                         
                         if (MainClass.textField.getText().indexOf(username) == 0) {
