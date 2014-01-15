@@ -27,7 +27,6 @@ import javax.swing.JTextField;
 public class MainClass {
 
     public static JTextArea textField;
-    private static boolean used = false;
     private static char ch = 'd';
     private static int num = 0, numSocks;
     private static ServerSocket ss;
@@ -43,7 +42,9 @@ public class MainClass {
             @Override
             public void keyPressed(KeyEvent event) {
                 ch = event.getKeyChar();
-                used = false;
+                if (ch == ' ') {
+                    textField.setText("");
+                }
             }
         });
         Font font = new Font("Verdana", Font.BOLD, 24);
@@ -55,23 +56,6 @@ public class MainClass {
         jframe.setVisible(true);
 
         Thread thread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (!used) {
-                        if(ch == ' ')
-                        {
-                            //removeFirstInLine = true;
-                            used = true;
-                            //System.out.println("Remove 1st in line");
-                        }
-                    }
-                }
-            }
-        };
-        thread.start();
-
-        Thread thread2 = new Thread() {
             @Override
             public void run() {
                 try {
@@ -95,6 +79,6 @@ public class MainClass {
                 }
             }
         };
-        thread2.start();
+        thread.start();
     }
 }
