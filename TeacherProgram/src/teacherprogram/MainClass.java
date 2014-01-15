@@ -5,6 +5,7 @@
 package teacherprogram;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -45,6 +46,8 @@ public class MainClass {
                 used = false;
             }
         });
+        Font font = new Font("Verdana", Font.BOLD, 24);
+        textField.setFont(font);
         JFrame jframe = new JFrame();
         jframe.setSize(400, 600);
         jframe.add(textField);
