@@ -19,17 +19,19 @@ public class Connection {
     Socket socket;
     BufferedReader input;
     String username;
-
+    Thread thread, thread2;
+    private volatile boolean running = true;
+    
     public Connection(Socket s, int n) {
         socket = s;
         try {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException ex) {
         }
-        Thread thread = new Thread() {
+        thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (running) {
                     try {
                         String read = input.readLine();
                         System.out.println(read);
@@ -41,10 +43,10 @@ public class Connection {
             }
         };
         thread.start();
-        Thread thread2 = new Thread() {
+        thread2 = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (running) {
                     try {
                         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                         out.println(" ");
@@ -73,18 +75,32 @@ public class Connection {
     public void processInput(String in) {
         String txt = MainClass.textField.getText();
         if (in.equals("DOWN")) {
-            txt = txt.substring(0, txt.indexOf(username)) + txt.substring(txt.indexOf(username) + username.length() + 2);
+            txt = txt.substring(0, txt.indexOf(username + "-")) + txt.substring(txt.indexOf(username + "-") + username.length() + 3);
             MainClass.textField.setText(txt);
         }
         if (in.equals("UP")) {
-            txt = txt + username + "\n\r";
+            txt = txt + username + "-\n\r";
             MainClass.textField.setText(txt);
         }
         if (in.equals("QUIT")) {
             try {
+                running = false;
                 socket.close();
+                
             } catch (IOException ex) {
             }
+        }
+        
+        if (in.equals("GRADEME"))
+        {
+            txt = txt + "-" + username + "\n\r";
+            MainClass.textField.setText(txt);
+        }
+        
+        if (in.equals("NOGRADE"))
+        {
+            txt = txt.substring(0, txt.indexOf("-" + username)) + txt.substring(txt.indexOf("-" + username) + username.length() + 2);
+            MainClass.textField.setText(txt);
         }
         if (in.contains("USERNAME:")) {
             username = in.substring(in.indexOf(":") + 1);
