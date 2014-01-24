@@ -2,32 +2,29 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package teacherquickedit;
+package teacherprogram;
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import javax.swing.JButton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Sam
  */
 public class MainClass {
-
+    
     public static JTextArea textField;
-    public static boolean used = true;
     private static char ch = 'd';
     private static int num = 0, numSocks;
     private static ServerSocket ss;
@@ -37,7 +34,7 @@ public class MainClass {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         textField = new JTextArea();
         textField.setEditable(false);
         textField.addKeyListener(new KeyAdapter() {
@@ -49,25 +46,26 @@ public class MainClass {
                 }
             }
         });
-
         Font font = new Font("Verdana", Font.BOLD, 24);
         textField.setFont(font);
         JFrame jframe = new JFrame();
         jframe.setSize(400, 600);
         jframe.add(textField);
-
+        
         jframe.setVisible(true);
-
-        Thread thread = new Thread() {
+        
+        jframe.addWindowListener(new WindowAdapter() {
             @Override
-            public void run() {
-                while (true) {
+            public void windowClosing(WindowEvent e) {
+                try {
+                    ss.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        };
-        thread.start();
-
-        Thread thread2 = new Thread() {
+        });
+        
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
@@ -87,6 +85,6 @@ public class MainClass {
                 }
             }
         };
-        thread2.start();
+        thread.start();
     }
 }
