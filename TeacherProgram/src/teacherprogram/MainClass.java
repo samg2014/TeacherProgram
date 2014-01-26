@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -60,7 +58,6 @@ public class MainClass {
                 try {
                     ss.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
